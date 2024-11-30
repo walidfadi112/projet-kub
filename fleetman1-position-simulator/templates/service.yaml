@@ -1,15 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "fleetman1-position-simulator.fullname" . }}
+  name: {{ .Release.Name }}-position-simulator
   labels:
-    {{- include "fleetman1-position-simulator.labels" . | nindent 4 }}
+    app: {{ .Chart.Name }}
 spec:
   type: {{ .Values.service.type }}
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
-      protocol: TCP
-      name: http
+  - port: {{ .Values.service.port }}
+    targetPort: {{ .Values.service.port }}
   selector:
-    {{- include "fleetman1-position-simulator.selectorLabels" . | nindent 4 }}
+    app: {{ .Chart.Name }}
